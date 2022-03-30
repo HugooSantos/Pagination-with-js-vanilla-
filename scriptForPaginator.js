@@ -61,7 +61,13 @@ const controls = {
 }
 
 const list = {
-    create() {},
+    create(item) {
+        const div = document.createElement('div')
+        div.classList.add('item')
+        div.innerHTML = item
+
+        html.get('.list').appendChild(div)
+    },
     update() {
         html.get('.list').innerHTML = ""
         let page = state.page - 1
@@ -74,12 +80,21 @@ const list = {
         )
     }
 }
+const buttons = {
+    create(){
+        
+    },
+    update(){
+        html.get('.numbers').innerHTML = ""
+    }
+}
 
 function update(){
-    console.log(state.page)
-}
-function init (){
     list.update()
+    buttons.update()
+}
+function init (){ 
+    update()
     controls.createListeners()
 }
 init()
