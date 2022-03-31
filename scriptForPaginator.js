@@ -5,7 +5,8 @@ let perPage = 10
 const state = {
     page: 1,
     perPage,
-    totalPage: Math.ceil(data.length / perPage)
+    totalPage: Math.ceil(data.length / perPage),
+    maxVisibleButtons: 5
 
 }
 
@@ -86,6 +87,24 @@ const buttons = {
     },
     update(){
         html.get('.numbers').innerHTML = ""
+        const {maxLeft , maxRight} = buttons.calculateMaxVisible()
+        console.log(maxLeft, maxRight);
+        // for(let page = maxLeft; page <= maxRight; page++){
+
+        // }
+    },
+    calculateMaxVisible(){
+        const {maxVisibleButtons} = state 
+        let maxLeft = (state.page - Math.floor(maxVisibleButtons / 2  ))
+        let maxRight = (state.page + Math.floor(maxVisibleButtons / 2))
+        if (maxLeft < 1){
+            maxLeft = 1
+            maxRight = maxVisibleButtons
+        }
+        if ( maxRight > state.totalPage){
+            maxLeft = state.totalPage - (maxVisibleButtons - 1 )
+        }
+        return maxLeft , maxRight
     }
 }
 
